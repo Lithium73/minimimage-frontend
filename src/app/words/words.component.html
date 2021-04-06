@@ -1,0 +1,8 @@
+<div class="container">
+  <div class="row" *ngFor="let item of wordsFakeArray;  index as i">
+      <input type="text" class="form-control" placeholder="Type a word" id="{{i}}"/>
+  </div>
+  <div class="row">
+      <button (click)="startGame()" class="btn btn-success">Start Game</button>
+  </div>
+</div>

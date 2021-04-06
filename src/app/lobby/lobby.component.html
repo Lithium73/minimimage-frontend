@@ -1,0 +1,97 @@
+<div class="container" *ngIf="error == null">
+  <app-logo></app-logo>
+  <div class="row d-flex justify-content-center">
+    logo
+  </div>
+  <div class="row d-flex justify-content-center mb-4">
+    roomId : {{roomId}}
+  </div>
+  <div class="row d-flex justify-content-center mt-4">
+    <div class="col-6">
+      <app-playerlist></app-playerlist>
+    </div>
+      <div class="col-6" *ngIf="backend.isHost">
+        <div class="row">
+          <div class="col-9">
+            <input type="text" class="form-control" placeholder="Player name" [(ngModel)]="myName"/>
+          </div>
+          <div class="col-3">
+            <button (click)="changeName()" class="btn btn-success">Change</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-9">
+            Word per person
+          </div>
+          <div class="col-3">
+            <input type="text" class="form-control" placeholder="3" [(ngModel)]="wordPerPerson"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-9">
+            Time per person
+          </div>
+          <div class="col-3">
+            <input type="text" class="form-control" placeholder="60" [(ngModel)]="timePerPerson"/>
+          </div>
+        </div>
+        <div class="row">
+          Round
+        </div>
+        <div class="row">
+          <div class="col-9">
+            Full
+          </div>
+          <div class="col-3">
+            <input type="checkbox" class="form-control" [(ngModel)]="full"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-9">
+            blackAndWhite
+          </div>
+          <div class="col-3">
+            <input type="checkbox" class="form-control" [(ngModel)]="blackAndWhite"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-9">
+            pixel
+          </div>
+          <div class="col-3">
+            <input type="checkbox" class="form-control" [(ngModel)]="pixel"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-9">
+            minimal
+          </div>
+          <div class="col-3">
+            <input type="checkbox" class="form-control" [(ngModel)]="minimal"/>
+          </div>
+        </div>
+        <div class="row">
+            <button (click)="startGame()" class="btn btn-success">Start Game</button>
+        </div>
+
+      </div>
+      <div class="col-6" *ngIf="!backend.isHost">
+        <div class="row">
+          <div class="col-9">
+            <input type="text" class="form-control" placeholder="Player name" [(ngModel)]="myName"/>
+          </div>
+          <div class="col-3">
+            <button (click)="changeName()" class="btn btn-success">Change</button>
+          </div>
+        </div>
+        <div class="row">
+            <button (click)="startGame()" class="btn btn-success">Ready</button>
+        </div>
+      </div>
+  </div>
+
+
+</div>
+<div class="container" *ngIf="error != null">
+{{error}}
+</div>
