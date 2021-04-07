@@ -10,4 +10,4 @@
 ``` ng serve ```
 4. Access to client : http://localhost:4200
 
-The client needs a running to backend to be fully functionnal
+The client needs a running backend to be fully functionnal
