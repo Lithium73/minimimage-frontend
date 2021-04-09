@@ -13,7 +13,8 @@ import { LogoComponent } from './logo/logo.component';
 import { WordsComponent } from './words/words.component';
 import { RoundComponent } from './round/round.component';
 import { WbComponent } from './wb/wb.component';
-import { ChatComponent } from './chat/chat.component'
+import { ChatComponent } from './chat/chat.component';
+import { EndComponent } from './end/end.component'
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ChatComponent } from './chat/chat.component'
     WordsComponent,
     RoundComponent,
     WbComponent,
-    ChatComponent
+    ChatComponent,
+    EndComponent
   ],
   imports: [
     BrowserModule,

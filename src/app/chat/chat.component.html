@@ -3,6 +3,6 @@
     <textarea disabled class="form-control" rows="20" cols="80" [ngModel]="textareaValue"></textarea>
   </div>
   <div class="row col-12">
-    <input type="text" placeholder="Answer" class="form-control" [(ngModel)]="currentResponse" (keyup.enter)="sendMessage()"/>
+    <input [disabled]="canChat == 'false' || canChat == false" type="text" placeholder="Answer" class="form-control" [(ngModel)]="currentResponse" (keyup.enter)="sendMessage()"/>
   </div>
 </div>

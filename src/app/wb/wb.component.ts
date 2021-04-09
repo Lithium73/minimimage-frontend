@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild,AfterViewInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild,AfterViewInit, Input } from '@angular/core';
 import {BackendService} from '../backend.service';
 
 @Component({
@@ -11,6 +11,8 @@ export class WbComponent implements OnInit,AfterViewInit {
   @ViewChild("canvas") canvas:ElementRef;
   @ViewChild("colors") colors:ElementRef;
 
+  @Input("canDraw") canDraw:any=false;
+
   private context:any = null;
 
   private current:any = {
@@ -22,29 +24,40 @@ export class WbComponent implements OnInit,AfterViewInit {
   constructor(private backend:BackendService) { }
 
   ngOnInit(): void {
+    // if(this.canDraw=="false")this.canDraw=false;
+    // if(this.canDraw=="true")this.canDraw=true;
     console.log("this.canvas",this.canvas)
+    this.backend.messages.subscribe((data)=>{
+
+      // if(data && data.action == "onRound"){
+      //   this.canDraw = (data.round.currentMaster.id == this.backend.currentAccount)
+      // }
+    })
   }
 
   ngAfterViewInit():void{
     console.log("this.canvas",this.canvas)
     console.log("this.canvas",this.colors)
     this.context = this.canvas.nativeElement.getContext('2d');
+    console.log("this.candraw",this.canDraw)
+    if(this.canDraw == "true" || this.canDraw == true){
+      this.canvas.nativeElement.addEventListener('mousedown', this.onMouseDown.bind(this), false);
+      this.canvas.nativeElement.addEventListener('mouseup', this.onMouseUp.bind(this), false);
+      this.canvas.nativeElement.addEventListener('mouseout', this.onMouseUp.bind(this), false);
+      this.canvas.nativeElement.addEventListener('mousemove', this.throttle(this.onMouseMove.bind(this), 10).bind(this), false);
 
+      //Touch support for mobile devices
+      this.canvas.nativeElement.addEventListener('touchstart', this.onMouseDown.bind(this), false);
+      this.canvas.nativeElement.addEventListener('touchend', this.onMouseUp.bind(this), false);
+      this.canvas.nativeElement.addEventListener('touchcancel', this.onMouseUp.bind(this), false);
+      this.canvas.nativeElement.addEventListener('touchmove', this.throttle(this.onMouseMove.bind(this), 10).bind(this), false);
 
-    this.canvas.nativeElement.addEventListener('mousedown', this.onMouseDown.bind(this), false);
-    this.canvas.nativeElement.addEventListener('mouseup', this.onMouseUp.bind(this), false);
-    this.canvas.nativeElement.addEventListener('mouseout', this.onMouseUp.bind(this), false);
-    this.canvas.nativeElement.addEventListener('mousemove', this.throttle(this.onMouseMove.bind(this), 10).bind(this), false);
-
-    //Touch support for mobile devices
-    this.canvas.nativeElement.addEventListener('touchstart', this.onMouseDown.bind(this), false);
-    this.canvas.nativeElement.addEventListener('touchend', this.onMouseUp.bind(this), false);
-    this.canvas.nativeElement.addEventListener('touchcancel', this.onMouseUp.bind(this), false);
-    this.canvas.nativeElement.addEventListener('touchmove', this.throttle(this.onMouseMove.bind(this), 10).bind(this), false);
-
-    for (var i = 0; i < this.colors.nativeElement.childNodes.length; i++){
-      this.colors.nativeElement.childNodes[i].addEventListener('click', this.onColorUpdate.bind(this), false);
+      for (var i = 0; i < this.colors.nativeElement.childNodes.length; i++){
+        this.colors.nativeElement.childNodes[i].addEventListener('click', this.onColorUpdate.bind(this), false);
+      }
     }
+
+
 
     //socket.on('drawing', this.onDrawingEvent.bind(this));
 
@@ -110,7 +123,7 @@ export class WbComponent implements OnInit,AfterViewInit {
     var rect = this.canvas.nativeElement.getBoundingClientRect();
     return {
         x: (e.clientX - rect.left) / (rect.right - rect.left) * this.canvas.nativeElement.width,
-        y: (e.clientY - rect.top) / (rect.bottom - rect.top) * this.canvas.nativeElement.height 
+        y: (e.clientY - rect.top) / (rect.bottom - rect.top) * this.canvas.nativeElement.height
     };
   }
 
